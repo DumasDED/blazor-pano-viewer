@@ -1,0 +1,11 @@
+﻿@using Microsoft.AspNetCore.Components;
+@using Microsoft.JSInterop;
+@using System.Diagnostics;
+@using System.Threading.Tasks;
+@using PanoramaViewer.Models
+
+@typeparam T where T : IPointOfInterest
+
+@inherits PanoramaViewerBase<T>
+
+<div id="canvas"></div>

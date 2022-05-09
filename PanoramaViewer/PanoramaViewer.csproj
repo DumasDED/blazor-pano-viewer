@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\sprites\**" />
+    <Content Remove="wwwroot\sprites\**" />
+    <EmbeddedResource Remove="wwwroot\sprites\**" />
+    <None Remove="wwwroot\sprites\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="JS\index.js" />
+    <Content Include="JS\panorama-viewer.js" />
+    <Content Include="Assets\disc.png" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <Target Name="PreBuild" AfterTargets="PreBuildEvent">
+    <Exec Condition="$(Configuration) == 'Debug'" Command="npm run build" />
+    <Exec Condition="$(Configuration) == 'Release'" Command="npm run build" />
+  </Target>
+
+</Project>
+  

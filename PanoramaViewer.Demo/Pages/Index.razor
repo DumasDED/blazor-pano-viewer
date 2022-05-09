@@ -1,0 +1,31 @@
+﻿@page "/"
+
+@using PanoramaViewer.Demo.Models
+
+@inherits IndexBase
+
+<div style="height: 90vh; display: flex; flex-direction: column;">
+    <div>
+        <p>Current Image: @currentPanorama.dataUri</p>
+        <p>Current Index: @currentIndex | Selected Index: @selectedIndex | Description: @currentPoiDescription</p>
+        <button @onclick="PreviousImage">Previous Image</button>
+        <button @onclick="NextImage">Next Image</button>
+    </div>
+    <div id="viewer-stuff" style="padding-top: 20px; display: flex; flex-direction: row; flex: auto; min-height: 100px;">
+        <div style="width: 80%">
+            <PanoramaViewer Panorama="@currentPanorama"
+                            PointsOfInterest="@currentPanorama.pointsOfInterest"
+                            T="PointOfInterest"
+                            SelectedIdxCallback="@OnSelectedIndexChange"
+                            HoveredIdxCallback="@OnHoveredIndexChange"
+                            PoiCreateCallback="@OnPoiCreated">
+            </PanoramaViewer>
+        </div>
+        <div style="padding: 10px;">
+            @for (var i = 0; i < currentPanorama.pointsOfInterest.Count; i++)
+                {
+                    <p style="cursor: pointer" @onclick="() => RemovePoi(i - 1)">@(i + 1): @currentPanorama.pointsOfInterest[i].description</p>
+                }
+        </div>
+    </div>
+</div>

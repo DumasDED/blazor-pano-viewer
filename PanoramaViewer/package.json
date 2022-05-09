@@ -1,0 +1,19 @@
+{
+  "name": "panoramaviewer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "wwwroot/index.js",
+  "scripts": {
+    "build": "snowpack build"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@snowpack/plugin-optimize": "^0.2.13",
+    "snowpack": "^3.8.8"
+  },
+  "dependencies": {
+    "big-integer": "^1.6.51",
+    "three": "^0.140.0"
+  }
+}
