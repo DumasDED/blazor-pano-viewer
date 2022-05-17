@@ -19,6 +19,8 @@ var height;
 
 let canvas;
 
+var domRect;    // Bounding client rectangle
+
 var raycaster;
 var pointer;    // Mouse position
 
@@ -64,6 +66,7 @@ export function init(panorama, poiPermissions) {
 
     // Get canvas element:
     canvas = document.getElementById("canvas");
+    domRect = canvas.getBoundingClientRect();
 
     // Create a new scene:
     scene = new THREE.Scene();
@@ -109,11 +112,12 @@ export function init(panorama, poiPermissions) {
  * Resize the viewer in the event the window gets resized.
  * */
 function onResize() {
-    const xWidth = canvas.parentElement.clientWidth;
-    const xHeight = canvas.parentElement.clientHeight;
-    camera.aspect = xWidth / xHeight;
+    domRect = canvas.getBoundingClientRect();
+    width = canvas.parentElement.clientWidth;
+    height = canvas.parentElement.clientHeight;
+    camera.aspect = width / height;
     camera.updateProjectionMatrix();
-    renderer.setSize(xWidth, xHeight);
+    renderer.setSize(width, height);
 }
 
 /**
@@ -336,8 +340,8 @@ function onPoiMouseOut() {
  * Handle the 'pointermove' event.
  */
 function onPointerMove(event) {
-    pointer.x = ((event.clientX - canvas.offsetLeft) / width) * 2 - 1;
-    pointer.y = - ((event.clientY - canvas.offsetTop) / height) * 2 + 1;
+    pointer.x = ((event.clientX - domRect.left) / width) * 2 - 1;
+    pointer.y = - ((event.clientY - domRect.top) / height) * 2 + 1;
 }
 
 /**
@@ -373,16 +377,18 @@ function onDocumentMouseMove(event) {
  * Handle the 'mousewheel' event. 
  */
 function onDocumentMouseWheel(event) {
-    if (event.wheelDeltaY) {                    // WebKit
-        camera.fov -= event.wheelDeltaY * 0.05;
-    } else if (event.wheelDelta) {              // Opera / Explorer 9
-        camera.fov -= event.wheelDelta * 0.05;
-    } else if (event.detail) {                  // Firefox
-        camera.fov += event.detail * 1.0;
+    if (event.target.localName == "canvas") {
+        if (event.wheelDeltaY) {                    // WebKit
+            camera.fov -= event.wheelDeltaY * 0.05;
+        } else if (event.wheelDelta) {              // Opera / Explorer 9
+            camera.fov -= event.wheelDelta * 0.05;
+        } else if (event.detail) {                  // Firefox
+            camera.fov += event.detail * 1.0;
+        }
+        if (camera.fov > 75) { camera.fov = 75; }   //  Zoom out max
+        if (camera.fov < 15) { camera.fov = 15; }   //  Zoom in max
+        camera.updateProjectionMatrix();
     }
-    if (camera.fov > 75) { camera.fov = 75; }   //  Zoom out max
-    if (camera.fov < 15) { camera.fov = 15; }   //  Zoom in max
-    camera.updateProjectionMatrix();
 }
 
 /**

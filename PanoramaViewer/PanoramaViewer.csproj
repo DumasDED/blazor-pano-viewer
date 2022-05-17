@@ -7,6 +7,7 @@
     <PackageId>PanoramaViewer</PackageId>
     <Description>A 360-degree panoramic image viewer component for Blazor.</Description>
     <Version>1.0.1</Version>
+    <PackageReleaseNotes>Fixed issues with mouse wheel events, offset for points of interest.</PackageReleaseNotes>
     <Authors>Darrell Dumas</Authors>
     <Company>Enstoa, Inc.</Company>
   </PropertyGroup>
