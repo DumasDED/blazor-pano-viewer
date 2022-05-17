@@ -109,17 +109,11 @@ export function init(panorama, poiPermissions) {
  * Resize the viewer in the event the window gets resized.
  * */
 function onResize() {
-    var viewerDiv = document.getElementById("viewer-stuff");
-    console.log(`Viewer-stuff Width: ${viewerDiv.clientWidth}`);
     const xWidth = canvas.parentElement.clientWidth;
     const xHeight = canvas.parentElement.clientHeight;
-    console.log(`Parent Element Width: ${canvas.parentElement.clientWidth}`);
     camera.aspect = xWidth / xHeight;
     camera.updateProjectionMatrix();
-
-    if (canvas.clientWidth !== xWidth || canvas.clientHeight !== xHeight) {
-        renderer.setSize(xWidth, xHeight);
-    }
+    renderer.setSize(xWidth, xHeight);
 }
 
 /**
@@ -365,18 +359,13 @@ function onDocumentMouseUp(event) {
 }
 
 /**
- * Handle the 'mousemove' event. .
- * 
+ * Handle the 'mousemove' event.
  */
 function onDocumentMouseMove(event) {
     if (isMouseDown) {
         var factor = 0.025 + (camera.fov - 15) * 0.00125
-        // var factor = 1;
-        // var factor = Math.tan(camera.fov / 2 * Math.PI / 180) / 1.5;
         lat = (event.clientY - onMouseDownY) * factor + onMouseDownLat;
         lng = -(event.clientX - onMouseDownX) * factor + onMouseDownLng;
-        console.log(`Lat: ${lat}`);
-        console.log(`Lng: ${lng}`);
     }
 }
 
@@ -393,7 +382,6 @@ function onDocumentMouseWheel(event) {
     }
     if (camera.fov > 75) { camera.fov = 75; }   //  Zoom out max
     if (camera.fov < 15) { camera.fov = 15; }   //  Zoom in max
-    console.log(camera.fov);
     camera.updateProjectionMatrix();
 }
 

@@ -109,17 +109,13 @@ export function init(panorama, poiPermissions) {
  * Resize the viewer in the event the window gets resized.
  * */
 function onResize() {
-    var viewerDiv = document.getElementById("viewer-stuff");
-    console.log(`Viewer-stuff Width: ${viewerDiv.clientWidth}`);
+    console.log(`Canvas Width: ${canvas.clientWidth}`);
     const xWidth = canvas.parentElement.clientWidth;
     const xHeight = canvas.parentElement.clientHeight;
     console.log(`Parent Element Width: ${canvas.parentElement.clientWidth}`);
     camera.aspect = xWidth / xHeight;
     camera.updateProjectionMatrix();
-
-    if (canvas.clientWidth !== xWidth || canvas.clientHeight !== xHeight) {
-        renderer.setSize(xWidth, xHeight);
-    }
+    renderer.setSize(xWidth, xHeight);
 }
 
 /**
